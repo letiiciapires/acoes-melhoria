@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plano de Ação de Melhoria</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- SDK do Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+  <!-- TELA 1: INICIAL -->
+  <div id="tela1" class="tela ativa">
+    <div class="logo-container">
+      <h2>CASTANHAL</h2>
+    </div>
+    <div class="botoes-home">
+      <button class="btn-principal" onclick="navegarPara('tela2')">CADASTRAR AÇÃO DE MELHORIA</button>
+      <button class="btn-principal" onclick="navegarPara('tela3'); carregarAcoes();">VISUALIZAR AÇÕES DE MELHORIA</button>
+    </div>
+  </div>
+
+  <!-- TELA 2: CADASTRO -->
+  <div id="tela2" class="tela">
+    <div class="header-banner">
+      <h2>CADASTRAR AÇÃO DE MELHORIA</h2>
+    </div>
+    <form id="formCadastro" onsubmit="salvarAcao(event)">
+      <div class="campo">
+        <label>DESCREVER PROBLEMA</label>
+        <textarea id="problema" placeholder="Descreva aqui o que precisa ser melhorado" required></textarea>
+      </div>
+
+      <div class="campo">
+        <label>DESCREVER AÇÃO</label>
+        <textarea id="acao" placeholder="Descreva aqui o que será feito para resolver o problema" required></textarea>
+      </div>
+
+      <div class="campo">
+        <label>NOME DO RESPONSÁVEL</label>
+        <input type="text" id="responsavel" placeholder="Digite seu nome" required>
+      </div>
+
+      <div class="campo">
+        <label>SETOR</label>
+        <select id="setor" required>
+          <option value="" disabled selected>Lista suspensa</option>
+          <option value="Preparação">Preparação</option>
+          <option value="Fiação">Fiação</option>
+          <option value="Tecelagem">Tecelagem</option>
+          <option value="Acabamento">Acabamento</option>
+          <option value="Almoxarifado">Almoxarifado</option>
+          <option value="Manutenção">Manutenção</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label>DATA DE INÍCIO</label>
+        <input type="date" id="dataInicio" required>
+      </div>
+
+      <div class="campo">
+        <label>DATA PARA CONCLUSÃO</label>
+        <input type="date" id="dataFim" required>
+      </div>
+
+      <div class="botoes-form">
+        <button type="button" class="btn-acao" onclick="limparFormulario()">LIMPAR TUDO</button>
+        <button type="submit" class="btn-acao">SALVAR</button>
+      </div>
+    </form>
+    <button class="btn-voltar" onclick="navegarPara('tela1')">VOLTAR À TELA INICIAL</button>
+  </div>
+
+  <!-- TELA 3: VISUALIZAR AÇÕES -->
+  <div id="tela3" class="tela">
+    <div class="header-banner flex-header">
+      <h2>CADASTRAR AÇÃO DE MELHORIA</h2>
+      <div class="filtro-container">
+        <label for="filtroSetor">Filtro: </label>
+        <select id="filtroSetor" onchange="filtrarTabela()">
+          <option value="TODOS">Todos os Setores</option>
+          <option value="Classificação">Classificação</option>
+          <option value="Embonecamento">Embonecamento</option>
+          <option value="Amaciador">Amaciador</option>
+          <option value="Estendedeira">Estendedeira</option>
+          <option value="Maceração">Maceração</option>
+          <option value="Carda Lobo">Carda Lobo</option>
+          <option value="Carda Theaser">Carda Theaser</option>
+          <option value="Carda Grossa">Carda Grossa</option>
+          <option value="Carda Fina">Carda Fina</option>
+          <option value="1º Passador">1º Passador</option>
+          <option value="2º Passador">2º Passador</option>
+          <option value="3º Passador">3º Passador</option>
+          <option value="Maçaroqueira">Maçaroqueira</option>
+          <option value="Meadeira">Meadeira</option>
+          <option value="Filatório">Filatório</option>
+          <option value="Bobina MackieRoll">Bobina MackieRoll</option>
+          <option value="Bobina Precisão">Bobina Precisão</option>
+          <option value="Bobina Autoconer">Bobina Autoconer</option>
+          <option value="Enoveladeira">Enoveladeira</option>
+          <option value="Embalagem de Fios">Embalagem de Fios</option>
+          <option value="Retorcedeira">Retorcedeira</option>
+          <option value="Urdideira">Urdideira</option>
+          <option value="Engomadeira">Engomadeira</option>
+          <option value="Tear Mackie">Tear Mackie</option>
+          <option value="Tear Sulzer">Tear Sulzer</option>
+          <option value="Cortadeira">Cortadeira</option>
+          <option value="Costura PG">Costura PG</option>
+          <option value="Costura Reta">Costura Reta</option>
+          <option value="Costura Vitra">Costura Vitra</option>
+          <option value="Carimbadeira">Carimbadeira</option>
+          <option value="Prensa">Urdideira</option>
+          <option value="Enroladeira">Urdideira</option>
+          <option value="Revisadeira">Urdideira</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="tabela-container">
+      <table>
+        <thead>
+          <tr>
+            <th>PROBLEMA</th>
+            <th>AÇÃO</th>
+            <th>RESPONSÁVEL</th>
+            <th>SETOR</th>
+            <th>STATUS</th>
+            <th>DATA INICIAL</th>
+            <th>META</th>
+            <th>DATA CONCLUSÃO</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaCorpo">
+          <!-- Linhas geradas via JavaScript -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="centralizar">
+      <button class="btn-voltar" onclick="navegarPara('tela1')">VOLTAR À TELA INICIAL</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

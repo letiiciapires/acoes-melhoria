@@ -1,0 +1,185 @@
+:root {
+  --bg-color: #c8c5a2;
+  --btn-color: #612d1d;
+  --btn-hover: #4a2115;
+  --card-bg: #b8b592;
+  --text-dark: #1a1a1a;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-dark);
+  display: flex;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.tela {
+  display: none;
+  width: 100%;
+  max-width: 900px;
+  padding: 20px;
+}
+
+.tela.ativa {
+  display: flex;
+  flex-direction: column;
+}
+
+/* TELA 1 */
+.logo-container {
+  text-align: center;
+  margin: 40px 0;
+  font-size: 28px;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.botoes-home {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.btn-principal {
+  background-color: var(--btn-color);
+  color: white;
+  border: none;
+  padding: 20px;
+  width: 100%;
+  max-width: 350px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 2px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.btn-principal:hover {
+  background-color: var(--btn-hover);
+}
+
+/* HEADERS */
+.header-banner {
+  background-color: var(--btn-color);
+  color: white;
+  padding: 12px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.flex-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.filtro-container select {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+/* FORMULÁRIO */
+.campo {
+  margin-bottom: 15px;
+  background-color: #bab794;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.campo label {
+  display: block;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.campo input, .campo textarea, .campo select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #a09d7c;
+  background-color: #dedcb8;
+  font-size: 14px;
+}
+
+.campo textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.botoes-form {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.btn-acao {
+  background-color: var(--btn-color);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-weight: bold;
+  cursor: pointer;
+  flex: 1;
+}
+
+.btn-voltar {
+  background-color: var(--btn-color);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 20px auto 0 auto;
+  display: block;
+}
+
+/* TABELA */
+.tabela-container {
+  overflow-x: auto;
+  background-color: #dedcb8;
+  border: 1px solid var(--btn-color);
+  max-width: 100%;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px; /* Garante rolagem horizontal se necessário */
+}
+
+th, td {
+  border: 1px solid var(--btn-color);
+  padding: 8px;
+  text-align: left;
+  vertical-align: top;
+  font-size: 13px;
+  word-wrap: break-word;
+}
+
+th {
+  background-color: #b8b592;
+  font-size: 12px;
+}
+
+/* Quebra de texto nas colunas longas */
+td:nth-child(1), td:nth-child(2) {
+  max-width: 200px;
+  white-space: pre-wrap;
+}
+
+.centralizar {
+  text-align: center;
+}
