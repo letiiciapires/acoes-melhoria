@@ -14,6 +14,7 @@ function navegarPara(idTela) {
 // Limpar formulário
 function limparFormulario() {
   document.getElementById('formCadastro').reset();
+  verificarSetorOutro(); // Esconde o campo "Outro" ao resetar
 }
 
 // Formatar data de AAAA-MM-DD para DD/MM/AAAA
@@ -23,6 +24,21 @@ function formatarDataBR(dataISO) {
   return `${dia}/${mes}/${ano}`;
 }
 
+// Exibe ou esconde o campo de texto para o setor "Outro"
+function verificarSetorOutro() {
+  const selectSetor = document.getElementById('setor');
+  const inputOutro = document.getElementById('setorOutro');
+  
+  if (selectSetor.value === 'Outro') {
+    inputOutro.style.display = 'block';
+    inputOutro.required = true;
+  } else {
+    inputOutro.style.display = 'none';
+    inputOutro.required = false;
+    inputOutro.value = '';
+  }
+}
+
 // Salvar Ação no Banco de Dados
 async function salvarAcao(e) {
   e.preventDefault();
@@ -30,18 +46,21 @@ async function salvarAcao(e) {
   const dataInicio = document.getElementById('dataInicio').value;
   const hoje = new Date().toISOString().split('T')[0];
 
-  // Regra do Status Inicial
   let statusInicial = "EM ANDAMENTO";
   if (dataInicio > hoje) {
     statusInicial = "A INICIAR";
   }
+
+  // Captura o setor correto (se for "Outro", pega o texto digitado)
+  const selectSetor = document.getElementById('setor').value;
+  const setorFinal = selectSetor === 'Outro' ? document.getElementById('setorOutro').value : selectSetor;
 
   const novaAcao = {
     problema: document.getElementById('problema').value,
     causa_raiz: document.getElementById('causaRaiz').value,
     acao: document.getElementById('acao').value,
     responsavel: document.getElementById('responsavel').value,
-    setor: document.getElementById('setor').value,
+    setor: setorFinal, // Usa o setorFinal aqui
     data_inicio: dataInicio,
     data_fim: document.getElementById('dataFim').value,
     status: statusInicial,
@@ -69,6 +88,7 @@ async function carregarAcoes() {
   }
 
   acoesLocais = data;
+  atualizarOpcoesFiltro(acoesLocais); // ATUALIZA O FILTRO DINAMICAMENTE
   renderizarTabela(acoesLocais);
 }
 
@@ -145,4 +165,35 @@ async function atualizarStatus(id, novoStatus) {
   } else {
     carregarAcoes();
   }
+}
+
+// Atualiza as opções do filtro com base nos setores cadastrados no banco
+function atualizarOpcoesFiltro(acoes) {
+  const selectFiltro = document.getElementById('filtroSetor');
+  const valorAtual = selectFiltro.value; // Mantém a seleção atual se houver
+
+  // Lista base de setores padrão
+  const setoresPadrao = ["Classificação", "Embonecamento", "Amaciador", "Estendedeira", "Maceração", "Carda Lobo", "Carda Theaser", "Carda Grossa", "Carda Fina", "1º Passador", "2º Passador", "3º Passador", "Maçaroqueira", "Meadeira", "Filatório", "Bobina MackieRoll", "Bobina Precisão", "Bobina Autoconer", "Enoveladeira", "Embalagem de Fios", "Retorcedeira", "Urdideira", "Engomadeira", "Tear Mackie", "Tear Sulzer", "Cortadeira", "Costura PG", "Costura Reta", "Costura Vitra", "Carimbadeira", "Prensa", "Enroladeira", "Revisadeira"];
+  
+  // Extrai setores dos cadastros existentes
+  const setoresCadastrados = acoes.map(item => item.setor);
+
+  // Une os setores padrão aos cadastrados sem duplicar
+  const todosSetores = Array.from(new Set([...setoresPadrao, ...setoresCadastrados])).sort();
+
+  // Limpa o select e adiciona a opção "Todos"
+  selectFiltro.innerHTML = '<option value="TODOS">Todos os Setores</option>';
+
+  // Preenche as opções
+  todosSetores.forEach(setor => {
+    if (setor) {
+      const option = document.createElement('option');
+      option.value = setor;
+      option.textContent = setor;
+      selectFiltro.appendChild(option);
+    }
+  });
+
+  // Restaura a seleção anterior se ainda existir
+  selectFiltro.value = valorAtual;
 }

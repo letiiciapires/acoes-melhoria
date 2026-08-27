@@ -31,7 +31,7 @@
         <label>DESCREVER PROBLEMA</label>
         <textarea id="problema" placeholder="Descreva aqui o que precisa ser melhorado" required></textarea>
       </div>
-     
+
       <div class="campo">
         <label>DESCRIÇÃO DA CAUSA RAIZ</label>
         <textarea id="causaRaiz" placeholder="Descreva o motivo mais profundo que fez o problema acontecer" required></textarea>
@@ -42,6 +42,7 @@
         <textarea id="acao" placeholder="Descreva aqui o que será feito para resolver o problema" required></textarea>
       </div>
 
+
       <div class="campo">
         <label>NOME DO RESPONSÁVEL</label>
         <input type="text" id="responsavel" placeholder="Digite seu nome" required>
@@ -49,7 +50,7 @@
 
       <div class="campo">
         <label>SETOR</label>
-        <select id="setor" required>
+        <select id="setor" onchange="verificarSetorOutro()" required>
           <option value="" disabled selected>Informe o setor</option>
           <option value="Classificação">Classificação</option>
           <option value="Embonecamento">Embonecamento</option>
@@ -84,7 +85,9 @@
           <option value="Prensa">Prensa</option>
           <option value="Enroladeira">Enroladeira</option>
           <option value="Revisadeira">Revisadeira</option>
+          <option value="Outro">Outro</option>
         </select>
+        <input type="text" id="setorOutro" placeholder="Insira sua resposta" style="display: none; margin-top: 10px;">
       </div>
 
       <div class="campo">
@@ -108,44 +111,11 @@
   <!-- TELA 3: VISUALIZAR AÇÕES -->
   <div id="tela3" class="tela">
     <div class="header-banner flex-header">
-      <h2>CADASTRAR AÇÃO DE MELHORIA</h2>
-      <div class="filtro-container">
+      <h2>AÇÕES DE MELHORIA</h2>
+<div class="filtro-container">
         <label for="filtroSetor">Filtro: </label>
         <select id="filtroSetor" onchange="filtrarTabela()">
           <option value="TODOS">Todos os Setores</option>
-          <option value="Classificação">Classificação</option>
-          <option value="Embonecamento">Embonecamento</option>
-          <option value="Amaciador">Amaciador</option>
-          <option value="Estendedeira">Estendedeira</option>
-          <option value="Maceração">Maceração</option>
-          <option value="Carda Lobo">Carda Lobo</option>
-          <option value="Carda Theaser">Carda Theaser</option>
-          <option value="Carda Grossa">Carda Grossa</option>
-          <option value="Carda Fina">Carda Fina</option>
-          <option value="1º Passador">1º Passador</option>
-          <option value="2º Passador">2º Passador</option>
-          <option value="3º Passador">3º Passador</option>
-          <option value="Maçaroqueira">Maçaroqueira</option>
-          <option value="Meadeira">Meadeira</option>
-          <option value="Filatório">Filatório</option>
-          <option value="Bobina MackieRoll">Bobina MackieRoll</option>
-          <option value="Bobina Precisão">Bobina Precisão</option>
-          <option value="Bobina Autoconer">Bobina Autoconer</option>
-          <option value="Enoveladeira">Enoveladeira</option>
-          <option value="Embalagem de Fios">Embalagem de Fios</option>
-          <option value="Retorcedeira">Retorcedeira</option>
-          <option value="Urdideira">Urdideira</option>
-          <option value="Engomadeira">Engomadeira</option>
-          <option value="Tear Mackie">Tear Mackie</option>
-          <option value="Tear Sulzer">Tear Sulzer</option>
-          <option value="Cortadeira">Cortadeira</option>
-          <option value="Costura PG">Costura PG</option>
-          <option value="Costura Reta">Costura Reta</option>
-          <option value="Costura Vitra">Costura Vitra</option>
-          <option value="Carimbadeira">Carimbadeira</option>
-          <option value="Prensa">Prensa</option>
-          <option value="Enroladeira">Enroladeira</option>
-          <option value="Revisadeira">Revisadeira</option>
         </select>
       </div>
     </div>
