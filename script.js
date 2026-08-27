@@ -38,6 +38,7 @@ async function salvarAcao(e) {
 
   const novaAcao = {
     problema: document.getElementById('problema').value,
+    causa_raiz: document.getElementById('causaRaiz').value,
     acao: document.getElementById('acao').value,
     responsavel: document.getElementById('responsavel').value,
     setor: document.getElementById('setor').value,
@@ -95,6 +96,7 @@ function renderizarTabela(lista) {
 
     tr.innerHTML = `
       <td>${item.problema}</td>
+      <td>${item.causa_raiz || ''}</td>
       <td>${item.acao}</td>
       <td>${item.responsavel}</td>
       <td>${item.setor}</td>
